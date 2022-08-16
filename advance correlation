@@ -1,0 +1,26 @@
+  #References: https://finnstats.com/index.php/2021/05/13/correlation-analysis-plot/
+  #References: http://www.sthda.com/english/wiki/wiki.php?id_contents=7307
+  setwd("C:/Users/Rajaraaman J S/Documents/Data Science Team/Correlation")
+  corrfile<-read.csv("data.csv",header = TRUE)
+  library(corrr)
+  library(corrmorant)
+  library(tidyverse)
+  library(dplyr)
+  library(corrplot)
+  library(RColorBrewer)
+  library(sjPlot)
+  library(PerformanceAnalytics)
+  #Kendall Tau
+  res<-cor.test(corrfile$QSQ,corrfile$LTIP, method="kendall")
+  res
+  ken<-cor(corrfile$QSQ,corrfile$LTIP,method = "kendall")
+  #Spearmans Rho
+  res1<-cor.test(corrfile$QSQ,corrfile$LTIP, method="spearman")
+  res1
+  #visualisations
+  corrmorant(corrfile, style = "binned") +
+    theme_dark() +
+    labs(title = "Correlations")
+  corrplot(corrfile, method="circle")# if more 2 variables are being correlated
+  sjp.corr(corrfile,title ="Spearman Correlation",decimals =2)
+  chart.Correlation(corrfile, histogram=TRUE, pch="+")
